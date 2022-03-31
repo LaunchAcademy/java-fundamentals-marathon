@@ -61,22 +61,37 @@ public class Cashier {
     double cashProvided = getMoneyValue("How much cash did the customer provide?");
     System.out.println(cashProvided);
 
+    // OUR OLD WAY, REFACTORED (LINES 65-84)
     // check if the customer provided enough money
     // if they didn't provide enough money,
-    while(cashProvided < orderTotal) {
-      // keep asking them until they do
-      cashProvided = getMoneyValue("That's not enough money, please provide enough!");
-    }
-
-    // calculate the change by subtracting the order total from the amount paid
-    double changeDue = cashProvided - orderTotal;
-    System.out.println("The change due to the customer is: $" + changeDue);
+//    while(cashProvided < orderTotal) {
+//      // keep asking them until they do
+//      cashProvided = getMoneyValue("That's not enough money, please provide enough!");
+//    }
+//
+//    // calculate the change by subtracting the order total from the amount paid
+//    double changeDue = cashProvided - orderTotal;
+//    System.out.println("The change due to the customer is: $" + changeDue);
 
     // check if we have enough money to provide change
     // if we don't have enough money
-    while(totalBalance < changeDue) {
-    // keep asking them until they pay a low enough amount that we can provide change
-      cashProvided = getMoneyValue("Sorry, we don't have enough money to provide change. Please pay closer to your order total of $" + orderTotal);
+//    while(totalBalance < changeDue) {
+//    // keep asking them until they pay a low enough amount that we can provide change
+//      cashProvided = getMoneyValue("Sorry, we don't have enough money to provide change. Please pay closer to your order total of $" + orderTotal);
+//      changeDue = cashProvided - orderTotal;
+//    }
+//
+//    System.out.println("Great, we can provide that change! Thank you for your order. The change due to the customer is: $" + changeDue);
+
+    // NEW WAY, REFACTORED
+    double changeDue = cashProvided - orderTotal;
+    while(cashProvided < orderTotal || totalBalance < changeDue) {
+      // keep asking them until they do
+      if(cashProvided < orderTotal) {
+        cashProvided = getMoneyValue("That's not enough money, please provide enough!");
+      } else {
+        cashProvided = getMoneyValue("Sorry, we don't have enough money to provide change. Please pay closer to your order total of $" + orderTotal);
+      }
       changeDue = cashProvided - orderTotal;
     }
 
